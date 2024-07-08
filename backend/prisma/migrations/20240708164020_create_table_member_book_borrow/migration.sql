@@ -1,8 +1,8 @@
 -- CreateTable
 CREATE TABLE "Member" (
     "id" SERIAL NOT NULL,
+    "code" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
     "penalty_end_date" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
@@ -13,9 +13,10 @@ CREATE TABLE "Member" (
 -- CreateTable
 CREATE TABLE "Book" (
     "id" SERIAL NOT NULL,
+    "code" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "author" TEXT NOT NULL,
-    "quantity" INTEGER NOT NULL,
+    "stock" INTEGER NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -35,6 +36,12 @@ CREATE TABLE "Borrow" (
 
     CONSTRAINT "Borrow_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Member_code_key" ON "Member"("code");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Book_code_key" ON "Book"("code");
 
 -- AddForeignKey
 ALTER TABLE "Borrow" ADD CONSTRAINT "Borrow_member_id_fkey" FOREIGN KEY ("member_id") REFERENCES "Member"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

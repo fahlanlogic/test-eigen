@@ -15,8 +15,8 @@ datasource db {
 
 model Member {
   id               Int       @id @default(autoincrement())
+  code             String    @unique
   name             String
-  email            String
   penalty_end_date DateTime?
   created_at       DateTime  @default(now())
   updated_at       DateTime  @updatedAt
@@ -25,9 +25,10 @@ model Member {
 
 model Book {
   id         Int      @id @default(autoincrement())
+  code       String   @unique
   title      String
   author     String
-  quantity   Int
+  stock      Int
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   borrows    Borrow[]
