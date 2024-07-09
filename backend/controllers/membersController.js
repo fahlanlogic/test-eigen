@@ -1,13 +1,14 @@
-const prisma = require("../libs/prisma");
+const MembersService = require("../services/membersService");
 
 // member baru
 class MembersController {
-  static async createNewMember(req, res) {
-    const { code, name } = req.body;
-    const member = await prisma.member.create({
-      data: { code, name },
-    });
-    res.json(member);
+  static async createNewMember(req, res, next) {
+    try {
+      const member = await MembersService.create(req.body);
+      res.json({ message: "Member created!", data: member });
+    } catch (error) {
+      next(error);
+    }
   }
 }
 
